@@ -38,6 +38,10 @@ sudo apt-get update
 
 sudo apt-get install jenkins -y 
 
+sleep 60
+
+JENKINS_PW=$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword)
+
 sudo cp -r jenkins/jobs /var/lib/jenkins/
 
 sudo cp -r jenkins/plugins /var/lib/jenkins/
@@ -46,9 +50,6 @@ sudo cp -r jenkins/plugins /var/lib/jenkins/
 sudo chown -R jenkins: /var/lib/jenkins/
 
 sudo systemctl restart jenkins
-
-JENKINS_PW=$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword)
-
 
 
 
