@@ -44,7 +44,7 @@ sudo chown -R jenkins: /var/lib/jenkins/
 
 sudo systemctl restart jenkins
 
-JENKINS_PW=$(cat /var/lib/jenkins/secrets/initialAdminPassword)
+JENKINS_PW=$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword)
 
 
 
