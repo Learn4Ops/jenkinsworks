@@ -59,7 +59,6 @@ sudo systemctl enable rke2-server.service
 
 sudo systemctl start rke2-server.service
 
-
 sudo chown $USER: /etc/rancher/rke2/rke2.yaml 
 
 
@@ -99,7 +98,7 @@ cp /etc/rancher/rke2/rke2.yaml ~/.kube/config
 
 mkdir -p /var/lib/jenkins/.kube
 
-cp /etc/rancher/rke2/rke2.yaml /var/lib/jenkins/.kube/config
+sudo cp /etc/rancher/rke2/rke2.yaml /var/lib/jenkins/.kube/config
 
 sudo chown -R jenkins: /var/lib/jenkins/.kube/config
 
