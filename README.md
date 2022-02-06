@@ -18,7 +18,7 @@ Jenkinsworks installs all dependencies with just one command
 
 
 ```
-curl https://raw.githubusercontent.com/Learn4Ops/jenkinsworks/main/fullinstall.sh 2>/dev/null | bash
+curl https://raw.githubusercontent.com/Learn4Ops/jenkinsworks/main/easyinstall.sh 2>/dev/null | bash
 ```
 This script will take up to 15 min. ( based on internet speed ) Please wait until end.
 
