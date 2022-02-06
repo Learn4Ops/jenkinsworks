@@ -38,7 +38,11 @@ sudo apt-get update
 
 sudo apt-get install jenkins -y 
 
-sudo cp -r jenkins/* /var/lib/jenkins/
+sudo cp -r jenkins/jobs /var/lib/jenkins/
+
+sudo cp -r jenkins/plugins /var/lib/jenkins/
+
+sudo cp -r jenkins/config.xml /var/lib/jenkins/
 
 sudo chown -R jenkins: /var/lib/jenkins/
 
