@@ -20,13 +20,13 @@ Jenkinsworks installs all dependencies with just one command
 ```
 curl https://raw.githubusercontent.com/Learn4Ops/jenkinsworks/main/fullinstall.sh 2>/dev/null | bash
 ```
+This script will take up to 15 min. ( based on internet speed ) Please wait until end.
 
 After the installation you can use Jenkins pipelines via web browser.
 
 The output will be like:
 
 ```
-6c442bb1f11146b9870582c359385e32
 Assuming host local ip.............
 Host Local ip 192.168.1.200
 You can browse Jenkins with http://192.168.1.200:8080
