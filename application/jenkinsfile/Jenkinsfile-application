@@ -1,0 +1,83 @@
+pipeline {
+    agent {
+        any{
+            customWorkspace './terraform/app'
+        }
+    }
+
+    options {
+    skipDefaultCheckout()
+    }
+
+    environment {
+        TF_IN_AUTOMATION  = 'true'
+        HOST_IP = sh (script: 'hostname -I | awk \'{print$1}\'',returnStdout: true).trim()
+    }
+
+    stages {
+
+        stage('Setup parameters') {
+            steps {
+                script { 
+                    properties([
+                                parameters([
+                                    choice(
+                                        choices: ['application','elk'], 
+                                        name: 'application'
+                            )]
+                        )]
+                    )
+                }
+            }
+        }
+        
+        stage('checkout'){
+
+            steps {
+            ws("./terraform/app/${params.application}") {
+                  
+                    checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: 'main']],
+                        doGenerateSubmoduleConfigurations: scm.doGenerateSubmoduleConfigurations,
+                        extensions: [[
+                            $class: 'SparseCheckoutPaths',
+                            sparseCheckoutPaths: [[path: 'application']]
+                        ]],
+                        userRemoteConfigs: scm.userRemoteConfigs
+                        
+                    ])
+                  
+            }
+        }
+        }
+        stage('Init') {
+            steps {
+                ws("./terraform/app/${application}/application/terraform") {
+                sh 'pwd'
+                sh 'ls -al'
+                sh 'terraform init '
+                }
+            }
+        }
+        stage('Plan') {
+            steps {
+                ws("./terraform/app/${application}/application/terraform") {
+                sh 'echo $HOST_IP'
+                sh 'terraform plan -out=${application}.plan -target="module.${application}" -var="kibanaingress=$HOST_IP.nip.io" ' 
+                
+                }
+            }
+        }
+        stage('Apply') {
+            steps {
+                ws("./terraform/app/${application}/application/terraform") {
+                sh 'terraform apply "${application}.plan"  '
+                sh 'terraform plan -destroy  -out=${application}destroy.plan '
+                
+                }
+            }
+        }
+        
+    }
+}

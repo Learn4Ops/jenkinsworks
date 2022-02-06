@@ -1,0 +1,79 @@
+pipeline {
+    agent {
+        any{
+            customWorkspace './terraform/open'
+        }
+    }
+
+    options {
+    skipDefaultCheckout()
+    }
+
+    environment {
+        TF_IN_AUTOMATION  = 'true'
+    }
+
+    stages {
+        
+        stage('Setup parameters') {
+            steps {
+                script { 
+                    properties([
+                                parameters([
+                                    choice(
+                                        choices: ['postgresql','rabbitmq','redis'], 
+                                        name: 'opensourceapp'
+                            )]
+                        )]
+                    )
+                }
+            }
+        }
+        stage('checkout'){
+
+            steps {
+            ws("./terraform/open/${opensourceapp}") {
+                
+                    checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: 'main']],
+                        doGenerateSubmoduleConfigurations: scm.doGenerateSubmoduleConfigurations,
+                        extensions: [[
+                            $class: 'SparseCheckoutPaths',
+                            sparseCheckoutPaths: [[path: 'opensource']]
+                        ]],
+                        userRemoteConfigs: scm.userRemoteConfigs
+                        
+                    ])
+
+            }
+        }
+        }
+        stage('Init') {
+            steps {
+                ws("./terraform/open/${opensourceapp}/opensource/terraform") {
+                sh 'terraform init '
+                sh 'env'
+                }
+            }
+        }
+        stage('Plan') {
+            steps {
+                ws("./terraform/open/${opensourceapp}/opensource/terraform") {
+                sh 'terraform plan -out=${opensourceapp}.plan -target="module.${opensourceapp}" ' 
+                
+                }
+            }
+        }
+        stage('Apply') {
+            steps {
+                ws("./terraform/open/${opensourceapp}/opensource/terraform") {
+                sh 'terraform apply "${opensourceapp}.plan"  '
+                sh 'terraform plan -destroy  -out=${opensourceapp}destroy.plan '
+                
+                }
+            }
+        }
+        
+    }
+}

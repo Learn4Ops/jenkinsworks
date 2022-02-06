@@ -1,0 +1,44 @@
+pipeline {
+    agent {
+        any{
+            customWorkspace './terraform/app'
+        }
+    }
+
+    options {
+    skipDefaultCheckout()
+    }
+
+    environment {
+        TF_IN_AUTOMATION  = 'true'
+    }
+
+    stages {
+
+        stage('Setup parameters') {
+            steps {
+                script { 
+                    properties([
+                                parameters([
+                                    choice(
+                                        choices: ['application','elk'], 
+                                        name: 'application'
+                            )]
+                        )]
+                    )
+                }
+            }
+        }
+
+        stage('Destroy') {
+            steps {
+                ws("./terraform/app/${application}/application/terraform") {
+                sh "pwd"
+                sh 'ls -al'
+                sh 'terraform init -reconfigure'
+                sh 'terraform apply -destroy  "${application}destroy.plan" '
+                }
+            }
+        }           
+        }
+    }

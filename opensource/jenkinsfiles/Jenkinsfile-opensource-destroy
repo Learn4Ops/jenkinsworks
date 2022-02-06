@@ -1,0 +1,42 @@
+pipeline {
+    agent {
+        any{
+            customWorkspace './terraform/oepen'
+        }
+    }
+
+    options {
+    skipDefaultCheckout()
+    }
+
+    environment {
+        TF_IN_AUTOMATION  = 'true'
+    }
+
+    stages {
+        
+        stage('Setup parameters') {
+            steps {
+                script { 
+                    properties([
+                                parameters([
+                                    choice(
+                                        choices: ['postgresql','rabbitmq','redis'], 
+                                        name: 'opensourceapp'
+                            )]
+                        )]
+                    )
+                }
+            }
+        }
+
+        stage('Destroy') {
+            steps {
+                ws("./terraform/open/${opensourceapp}/opensource/terraform") {
+                sh 'terraform init -reconfigure'
+                sh 'terraform apply -destroy  "${opensourceapp}destroy.plan" '
+                }
+            }
+        }           
+        }
+    }
