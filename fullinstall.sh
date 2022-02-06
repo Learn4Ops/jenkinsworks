@@ -5,7 +5,7 @@ echo "**************************************************************************
 sudo ls
 
 
-git clone https://github.com/Learn4Ops/jenkinstest.git
+git clone https://github.com/Learn4Ops/jenkinsworks.git
 
 cd jenkinstest
 
