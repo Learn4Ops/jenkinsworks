@@ -14,12 +14,20 @@ Disk: 75 GB
 ## !!*** Warning you must use an account with sudo privileges ***!!
 
 
-Jenkinsworks installs all dependencies with just one command
-
+Jenkinsworks installs all dependencies with just one command;
 
 ```
 curl https://raw.githubusercontent.com/Learn4Ops/jenkinsworks/main/easyinstall.sh 2>/dev/null | bash
 ```
+
+If you want to clone repo and edit the script;
+
+```
+cd jenkinsworks
+
+bash install.sh
+```
+
 This script will take up to 15 min. ( based on internet speed ) Please wait until end.
 
 After the installation you can use Jenkins pipelines via web browser.
