@@ -9,7 +9,7 @@
 OS: Ubuntu 20.04
 Ram: 8 GB
 Cpu: 4 vpu
-Disk: 75 GB (
+Disk: 75 GB 
 ```
 ## !!*** Warning you must use an account with sudo privileges ***!!
 
