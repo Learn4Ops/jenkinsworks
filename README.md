@@ -34,6 +34,8 @@ You can browse Jenkins with http://192.168.1.200:8080
  User: admin     PW: 6c442bb1f11146b9870582c359385e32
 ```
 
-Login the http://192.168.1.200:8080 with this credentials. Then just run the pipelines.
+Login the http://192.168.1.200:8080 with this credentials. Then just run the pipelines with you choice .
+
+If you want to test Destroy pipelines dont forget that you must create this envrionemnt before do that.
 
 ## !!*** Warning you must use one pipeline job on the same time. ***!!
