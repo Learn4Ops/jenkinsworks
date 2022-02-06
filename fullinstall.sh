@@ -96,11 +96,11 @@ mkdir -p ~/.kube
 
 cp /etc/rancher/rke2/rke2.yaml ~/.kube/config
 
-mkdir -p /var/lib/jenkins/.kube
+sudo mkdir -p /var/lib/jenkins/.kube
 
 sudo cp /etc/rancher/rke2/rke2.yaml /var/lib/jenkins/.kube/config
 
-sudo chown -R jenkins: /var/lib/jenkins/.kube/config
+sudo chown -R jenkins: /var/lib/jenkins/.kube
 
 echo "**************************************************************************************************************************************"
 echo "***********************************************************Managing Applications******************************************************"
