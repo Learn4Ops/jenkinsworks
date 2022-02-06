@@ -113,5 +113,5 @@ HOST_IP=$(hostname -I | awk '{print$1}')
 
 echo "Assuming host local ip............."
 echo "Host Local ip $HOST_IP"
-echo "You can browse Jenkins wiht http://$HOST_IP:8080  \n "
+echo "You can browse Jenkins with http://$HOST_IP:8080  \n "
 echo " User: admin     PW: $JENKINS_PW "
